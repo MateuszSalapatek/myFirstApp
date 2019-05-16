@@ -6,6 +6,13 @@ var tittleTable = [];
 var filmsTable = [];
 var filteredFilms = [];
 
+function filterData(value) {
+  return value.filmYear >= 2000 && value.filmYear <=2005
+          && value.filmScore >=8 && value.filmScore <=10;
+}
+
+var filtered = [12, 5, 8, 130, 44].filter(isBigEnough);
+
 function showTableTittle(table){
   var allTittle = '';
   for (var i=0; i<table.length; i++) {
@@ -26,27 +33,21 @@ function clickSecondSubmit(){
   showFilmsData(filmsTable);
 }
 
-function filterYear(minYear,maxYear){
-  for (var i=0; i<filmsTable.length; i++) {
-    if(filmsTable[i].filmYear >= minYear && filmsTable[i].filmYear <= maxYear){
-      filteredFilms.push(filmsTable[i]);
-    }
-  }
+function clickFilterData(){
+
+  filteredFilms = filmsTable.filter(filterData);
 
   for (var i=0; i<filteredFilms.length; i++) {
-    document.getElementById("mainText").value = document.getElementById("mainText").value + filteredFilms[i].filmTittle + ' - ' + filteredFilms[i].filmYear +'\n';
+    document.getElementById("mainText").value = document.getElementById("mainText").value + filteredFilms[i].filmTittle + ' - ' + filteredFilms[i].filmYear 
+    + ' - ' + filteredFilms[i].filmScore +'\n';
   }
   window.alert('wielkość tablicy początkowej: '+ filmsTable.length);
   window.alert('wielkość tablicy po filtrowaniu: '+ filteredFilms.length);
 }
 
-function clickFilterYear() {
-  filterYear(2002,2012);
-}
-
 function clickRandomFilm() {
   var random = Math.floor(Math.random()*(filteredFilms.length-1)+1);
-  document.getElementById("randomFilm").value = filteredFilms[random].filmTittle + ' - ' + filteredFilms[random].filmYear;
+  document.getElementById("randomFilm").value = filteredFilms[random].filmTittle + ' - ' + filteredFilms[random].filmYear + ' - ' + filteredFilms[random].filmScore;
 }
 
 
@@ -58,12 +59,14 @@ function clickSubmit(){
       var time = snap.child("time").val();
       var tittle = snap.child("tittle").val();
       var year = snap.child("year").val();
+      var score = snap.child("score").val();
       tittleTable.push(tittle);
 
       var film = {
         filmTittle: tittle,
         filmTime: time,
-        filmYear: year
+        filmYear: year,
+        filmScore: score
         };  
       filmsTable.push(film);
     })
@@ -73,6 +76,26 @@ function clickSubmit(){
   }catch(e){ 
     console.error(e); 
   }
+}
+
+function clickTestAccelometr(){
+  window.alert("weszlo");
+  function onSuccess(acceleration) {
+    alert('Acceleration X: ' + acceleration.x + '\n' +
+          'Acceleration Y: ' + acceleration.y + '\n' +
+          'Acceleration Z: ' + acceleration.z + '\n' +
+          'Timestamp: '      + acceleration.timestamp + '\n');
+
+    window.alert("weszlo2");
+};
+
+function onError() {
+    alert('onError!');
+};
+
+navigator.accelerometer.getCurrentAcceleration(onSuccess, onError)
+
+
 }
 
 
