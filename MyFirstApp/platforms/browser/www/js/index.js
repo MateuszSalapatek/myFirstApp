@@ -78,26 +78,6 @@ function clickSubmit(){
   }
 }
 
-function clickTestAccelometr(){
-  window.alert("weszlo");
-  function onSuccess(acceleration) {
-    alert('Acceleration X: ' + acceleration.x + '\n' +
-          'Acceleration Y: ' + acceleration.y + '\n' +
-          'Acceleration Z: ' + acceleration.z + '\n' +
-          'Timestamp: '      + acceleration.timestamp + '\n');
-
-    window.alert("weszlo2");
-};
-
-function onError() {
-    alert('onError!');
-};
-
-navigator.accelerometer.getCurrentAcceleration(onSuccess, onError)
-
-
-}
-
 
 
     //****dodanie pojedynczego wpisu do firebase */
